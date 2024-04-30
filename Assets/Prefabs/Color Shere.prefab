@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 7102254402387764215}
   - component: {fileID: 6060857665167521324}
   - component: {fileID: 2758003963261281177}
+  - component: {fileID: -6425949326115675563}
   m_Layer: 0
-  m_Name: Game Ball
+  m_Name: Color Shere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3595033597551671592}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3, y: 4.5, z: 4}
+  m_LocalPosition: {x: -4.3, y: 4.5, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -64,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dd68501ac19e2e3488f7d407316a5edb, type: 2}
+  - {fileID: 2100000, guid: 8693d58d09b4abd4d99eba9701eb2922, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,7 +103,7 @@ SphereCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
@@ -134,6 +135,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6425949326115675563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3595033597551671592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b035a49c3649d43b3eee0a01db9c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sphereParticles: {fileID: 7980955384637364380}
 --- !u!1001 &5673837881382827449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,16 +157,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 7073395492919272433}
     m_Modifications:
     - target: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.03000021
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.010000229
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -191,8 +213,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3491187672072027614, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
+      propertyPath: lengthInSec
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3491187672072027614, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3491187672072027614, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -202,5 +232,10 @@ PrefabInstance:
 --- !u!4 &5573733191436730429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 280460898099688836, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
+  m_PrefabInstance: {fileID: 5673837881382827449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7980955384637364380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2341741921144630565, guid: 8c03a4a2fe8e3cf42bc6234f0b02ffe6, type: 3}
   m_PrefabInstance: {fileID: 5673837881382827449}
   m_PrefabAsset: {fileID: 0}
