@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Sphere
+  - Boundry
   layers:
   - Default
   - TransparentFX

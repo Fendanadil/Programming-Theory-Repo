@@ -16,6 +16,8 @@ public class Sphere : MonoBehaviour
     [SerializeField] private GameObject sphereLine;
     private LineRenderer sphereLR;
 
+    private float outOfBoundY = -10.0f;
+
     private float planeY = 3.0f;
     private Plane plane;
     private Ray ray;
@@ -90,7 +92,8 @@ public class Sphere : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
+        // fading of the sphere
         if (isFadingOut) 
         {
             FadeOutSphere();
@@ -101,6 +104,7 @@ public class Sphere : MonoBehaviour
             FadeInSphere();
         }
 
+        // line drawing
         if (isPullingLine) 
         {
             PullLine();
@@ -109,6 +113,12 @@ public class Sphere : MonoBehaviour
         if (isRetractingLine)
         {
             RetractLine();
+        }
+
+        // recover spheres that got out of bound
+        if (gameObject.transform.position.y < outOfBoundY) 
+        {
+            DisolveSphere(true);
         }
 
     }
@@ -180,15 +190,16 @@ public class Sphere : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) 
+        if (collision.gameObject.CompareTag("Ground"))
         {
             // disolve the sphere and trigger respawn
-            DisolveSpehre(true);
+            DisolveSphere(true);
         }
+         
     }
 
     // Disolve the spehre by playing the particle effect and fading the visibility?
-    private void DisolveSpehre(bool doRespawn) 
+    private void DisolveSphere(bool doRespawn) 
     {
         // stop any motion
         StopSphere();
@@ -234,6 +245,9 @@ public class Sphere : MonoBehaviour
         StopSphere();
         sphereRB.freezeRotation = true;
         plane = new Plane(Vector3.up, Vector3.up * planeY);
+
+        // stop gravity
+        sphereRB.useGravity = false;
         
         // set starting conditions for the line drawing
         sphereLine.SetActive(true);
@@ -249,17 +263,20 @@ public class Sphere : MonoBehaviour
         float distance;
         if (plane.Raycast(ray, out distance)) 
         {
-            gameObject.transform.position = ray.GetPoint(distance);
+            sphereRB.velocity = (ray.GetPoint(distance) - gameObject.transform.position) * 10; 
         }
     }
 
-    // when letting go
+    // whenletting go
     private void OnMouseUp()
     {
-        StopSphere();
+        //StopSphere();
         sphereRB.freezeRotation = false;
         isPullingLine = false;
         isRetractingLine = true;
+
+        // restore gravity
+        sphereRB.useGravity = true;
     }
 
     // function of the sphere
