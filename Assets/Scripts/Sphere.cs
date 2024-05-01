@@ -8,18 +8,28 @@ public class Sphere : MonoBehaviour
 {
     private MeshRenderer sphereMR;
     private Rigidbody sphereRB;
+    private SphereCollider sphereC;
     [SerializeField] private GameObject sphereParticles;
     private ParticleSystem spherePS;
     [SerializeField] private GameObject sphereLight;
     private Light sphereL;
+    [SerializeField] private GameObject sphereLine;
+    private LineRenderer sphereLR;
 
     private float planeY = 3.0f;
     private Plane plane;
     private Ray ray;
 
+    private float lineDrawTime = 0.25f;
+    private float lineLength = 1.5f;
+    private float sphereRadius;
+    private Vector3 realDown;
+
     private float fadeTime = 0.25f;
     private bool isFadingOut = false;
     private bool isFadingIn = false;
+    private bool isPullingLine = false;
+    private bool isRetractingLine = false;
     private Vector3 spawnPosition;
     private bool hasColor = false;
     private Color m_sphereColor;
@@ -49,10 +59,15 @@ public class Sphere : MonoBehaviour
     {
         // init
         sphereMR = GetComponent<MeshRenderer>();
+        sphereC = GetComponent<SphereCollider>();
         sphereRB = GetComponent<Rigidbody>();
-        spherePS = sphereParticles.GetComponent<ParticleSystem>();
         sphereL = sphereLight.GetComponent<Light>();
+        sphereLR = sphereLine.GetComponent<LineRenderer>();
+        spherePS = sphereParticles.GetComponent<ParticleSystem>();
         var main = spherePS.main;
+
+        // store dimension
+        sphereRadius = sphereC.radius;
 
         // set the spawn position
         spawnPosition = gameObject.transform.position;
@@ -62,6 +77,9 @@ public class Sphere : MonoBehaviour
         
         // light color
         sphereL.color = sphereColor;
+
+        // line color
+        sphereLR.startColor = m_sphereColor;
 
         // set attributes for the particle spawner
         main.startColor = m_sphereColor;
@@ -83,13 +101,23 @@ public class Sphere : MonoBehaviour
             FadeInSphere();
         }
 
+        if (isPullingLine) 
+        {
+            PullLine();
+        }
+
+        if (isRetractingLine)
+        {
+            RetractLine();
+        }
+
     }
 
     private void FadeOutSphere() 
     {
         Color thisColor = sphereMR.material.color;
-        float fadeAmount = thisColor.a - ((1 / fadeTime) * Time.deltaTime);
-        thisColor = new Color(thisColor.r, thisColor.g, thisColor.b, fadeAmount);
+        float alphaValue = thisColor.a - (1 / fadeTime * Time.deltaTime);
+        thisColor = new Color(thisColor.r, thisColor.g, thisColor.b, alphaValue);
         sphereMR.material.color = thisColor;
         if (thisColor.a <= 0)
         {
@@ -104,11 +132,51 @@ public class Sphere : MonoBehaviour
     private void FadeInSphere() 
     {
         Color thisColor = sphereMR.material.color;
-        float fadeAmount = thisColor.a + ((1 / fadeTime) * Time.deltaTime);
-        thisColor = new Color(thisColor.r, thisColor.g, thisColor.b, fadeAmount);
+        float alphaValue = thisColor.a + (1 / fadeTime * Time.deltaTime);
+        if (alphaValue > 1) {
+            alphaValue = 1;
+            isFadingIn = false;
+        }
+        thisColor = new Color(thisColor.r, thisColor.g, thisColor.b, alphaValue);
         sphereMR.material.color = thisColor;
-        if (thisColor.a >= 1) { isFadingIn = false; }
+        
     }
+
+
+    private void SetLineStart()
+    {
+        realDown = gameObject.transform.InverseTransformVector(Vector3.down);
+        Vector3 startingPoint = realDown * sphereRadius;
+        
+        sphereLR.SetPosition(0, startingPoint);
+        sphereLR.SetPosition(1, startingPoint);
+    }
+
+    private void PullLine() 
+    {
+        float thisLength = Vector3.Distance(sphereLR.GetPosition(0), sphereLR.GetPosition(1)) + (1 / lineDrawTime * Time.deltaTime);
+        if (thisLength > lineLength) 
+        {
+            thisLength = lineLength;
+            isPullingLine = false;
+        }
+        Vector3 endPoint = sphereLR.GetPosition(0) + (realDown * thisLength);
+        sphereLR.SetPosition(1, endPoint);
+    }
+
+    private void RetractLine()
+    {
+        float thisLength = Vector3.Distance(sphereLR.GetPosition(0), sphereLR.GetPosition(1)) - (1 / lineDrawTime * Time.deltaTime);
+        if (thisLength < 0)
+        {
+            thisLength = 0;
+            isRetractingLine = false;
+            sphereLine.SetActive(false);
+        }
+        Vector3 endPoint = sphereLR.GetPosition(0) + (realDown * thisLength);
+        sphereLR.SetPosition(1, endPoint);
+    }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -159,10 +227,19 @@ public class Sphere : MonoBehaviour
         sphereRB.angularVelocity = Vector3.zero;
     }
 
-    // on click
+    // when picking up
     private void OnMouseDown()
     {
+        // stop current movement/rotation and define drag & drop plane
+        StopSphere();
+        sphereRB.freezeRotation = true;
         plane = new Plane(Vector3.up, Vector3.up * planeY);
+        
+        // set starting conditions for the line drawing
+        sphereLine.SetActive(true);
+        isPullingLine = true;
+
+        SetLineStart();
     }
 
     // on drag
@@ -174,6 +251,15 @@ public class Sphere : MonoBehaviour
         {
             gameObject.transform.position = ray.GetPoint(distance);
         }
+    }
+
+    // when letting go
+    private void OnMouseUp()
+    {
+        StopSphere();
+        sphereRB.freezeRotation = false;
+        isPullingLine = false;
+        isRetractingLine = true;
     }
 
     // function of the sphere

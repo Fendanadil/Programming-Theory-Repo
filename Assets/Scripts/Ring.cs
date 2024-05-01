@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Ring : MonoBehaviour
 {
-    private float pullRadius = 2f;
-    private float pullForce = 10.0f;
+    private float pullRadius = 1f;
+    private float pullForce = 150.0f;
 
     public void FixedUpdate()
     {
