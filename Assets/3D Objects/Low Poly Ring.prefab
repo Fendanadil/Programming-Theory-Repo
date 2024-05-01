@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4385808236064386670}
   - component: {fileID: 915935869039501807}
   - component: {fileID: 2633688648848290356}
+  - component: {fileID: 463938552832100495}
   m_Layer: 0
   m_Name: Low Poly Ring
   m_TagString: Untagged
@@ -91,7 +92,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7067316750639456112}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d074832c0ac2b8f41b3d864931607277, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -106,3 +107,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -311982453927907917, guid: 97e30d905d584b944b46771b3f67fdfe, type: 3}
+--- !u!114 &463938552832100495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7067316750639456112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a55d7680ea870484c9bc1707e48c5c89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

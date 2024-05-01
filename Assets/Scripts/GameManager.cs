@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject sphere;
     private List<Color> sphereColors = new List<Color>();
     private float spawnDelay = 1.0f;
-    private Vector3 spawnPos1 = new Vector3(-4.3f, 4.5f, 4.0f);
-    private Vector3 spawnPos2 = new Vector3(4.3f, 4.5f, 4.0f);
+    private Vector3 spawnPos1 = new Vector3(-4.3f, 5f, 4.0f);
+    private Vector3 spawnPos2 = new Vector3(4.3f, 5f, 4.0f);
 
     private void Awake()
     {

@@ -13,8 +13,9 @@ public class Sphere : MonoBehaviour
     [SerializeField] private GameObject sphereLight;
     private Light sphereL;
 
-    private Vector3 dragScreenSpace;
-    private Vector3 dragOffset;
+    private float planeY = 3.0f;
+    private Plane plane;
+    private Ray ray;
 
     private float fadeTime = 0.25f;
     private bool isFadingOut = false;
@@ -161,17 +162,18 @@ public class Sphere : MonoBehaviour
     // on click
     private void OnMouseDown()
     {
-        StopSphere();
-        dragScreenSpace = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        dragOffset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, dragScreenSpace.z));
+        plane = new Plane(Vector3.up, Vector3.up * planeY);
     }
 
     // on drag
     private void OnMouseDrag()
     {
-        Vector3 curScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dragScreenSpace.z);
-        Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPosition) + dragOffset;
-        transform.position = new Vector3(curPosition.x, 3, curPosition.z);
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float distance;
+        if (plane.Raycast(ray, out distance)) 
+        {
+            gameObject.transform.position = ray.GetPoint(distance);
+        }
     }
 
     // function of the sphere
