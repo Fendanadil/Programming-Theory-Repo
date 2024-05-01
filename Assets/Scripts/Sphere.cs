@@ -10,6 +10,8 @@ public class Sphere : MonoBehaviour
     private Rigidbody sphereRB;
     [SerializeField] private GameObject sphereParticles;
     private ParticleSystem spherePS;
+    [SerializeField] private GameObject sphereLight;
+    private Light sphereL;
 
     private Vector3 dragScreenSpace;
     private Vector3 dragOffset;
@@ -48,13 +50,17 @@ public class Sphere : MonoBehaviour
         sphereMR = GetComponent<MeshRenderer>();
         sphereRB = GetComponent<Rigidbody>();
         spherePS = sphereParticles.GetComponent<ParticleSystem>();
+        sphereL = sphereLight.GetComponent<Light>();
         var main = spherePS.main;
-
-        // color
-        sphereMR.material.color = new Color(m_sphereColor.r, m_sphereColor.g, m_sphereColor.b, 0);
 
         // set the spawn position
         spawnPosition = gameObject.transform.position;
+
+        // color
+        sphereMR.material.color = new Color(m_sphereColor.r, m_sphereColor.g, m_sphereColor.b, 0);
+        
+        // light color
+        sphereL.color = sphereColor;
 
         // set attributes for the particle spawner
         main.startColor = m_sphereColor;
