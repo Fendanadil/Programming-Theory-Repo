@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2758003963261281177}
   - component: {fileID: -6425949326115675563}
   m_Layer: 0
-  m_Name: Color Shere
+  m_Name: Color Sphere
   m_TagString: Sphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
