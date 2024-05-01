@@ -4,9 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class Sphere : MonoBehaviour
+public abstract class Sphere : MonoBehaviour
 {
-    private MeshRenderer sphereMR;
+    protected MeshRenderer sphereMR;
     private Rigidbody sphereRB;
     private SphereCollider sphereC;
     [SerializeField] private GameObject sphereParticles;
@@ -55,7 +55,6 @@ public class Sphere : MonoBehaviour
         }
     }
 
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -74,8 +73,11 @@ public class Sphere : MonoBehaviour
         // set the spawn position
         spawnPosition = gameObject.transform.position;
 
-        // color
+        // set material properties
         sphereMR.material.color = new Color(m_sphereColor.r, m_sphereColor.g, m_sphereColor.b, 0);
+
+        // set additional properties
+        SetAdditionalProperties(); 
         
         // light color
         sphereL.color = sphereColor;
@@ -90,6 +92,12 @@ public class Sphere : MonoBehaviour
         // spawn the sphere
         SpawnSphere(spawnPosition);
     }
+
+    public virtual void SetAdditionalProperties() 
+    { 
+    
+    }
+        
 
     private void Update()
     {   
@@ -280,8 +288,5 @@ public class Sphere : MonoBehaviour
     }
 
     // function of the sphere
-    public virtual void ApplySphereFunction() 
-    { 
-
-    }
+    public abstract void ApplySphereFunction();
 }

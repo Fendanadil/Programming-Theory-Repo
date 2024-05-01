@@ -8,14 +8,14 @@ public class Torch : MonoBehaviour
     [SerializeField] GameObject torchLight;
     private Light torchL;
     [SerializeField] List<Color> colorList;
-    public float minDuration = 0.05f;
-    public float maxDuration = 0.4f;
-    public float offsetRange = 0.2f;
-    public float intensityMin = 0.4f;
-    public float intensityMax = 0.6f;
-    public Vector3 lightAnchorPos;
-    public Vector3 targetPos;
-    public Color targetCol;
+    private float minDuration = 0.05f;
+    private float maxDuration = 0.4f;
+    private float offsetRange = 0.1f;
+    private float intensityMin = 0.4f;
+    private float intensityMax = 0.6f;
+    private Vector3 lightAnchorPos;
+    private Vector3 targetPos;
+    private Color targetCol;
     private float targetIntensity;
     private float transitionSpeed;
 

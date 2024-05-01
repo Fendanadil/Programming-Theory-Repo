@@ -478,7 +478,11 @@ PrefabInstance:
     - target: {fileID: 915935869039501807, guid: 7d3dcdb4e350adb43954e1882b659942, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a5386d2cc84a4ee459e056bd6416f303, type: 2}
+      objectReference: {fileID: 2100000, guid: e2752d39f8adc8e428d5f189c5072140, type: 2}
+    - target: {fileID: 2633688648848290356, guid: 7d3dcdb4e350adb43954e1882b659942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3613771281540028592, guid: 7d3dcdb4e350adb43954e1882b659942, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -943,7 +947,7 @@ PrefabInstance:
     - target: {fileID: 915935869039501807, guid: 7d3dcdb4e350adb43954e1882b659942, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a5386d2cc84a4ee459e056bd6416f303, type: 2}
+      objectReference: {fileID: 2100000, guid: 1abbbba2a6fc21b4da349b504ffcb2d1, type: 2}
     - target: {fileID: 3613771281540028592, guid: 7d3dcdb4e350adb43954e1882b659942, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1087,7 +1091,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b9b60ed88771a408b143ba2a15bbfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 3595033597551671592, guid: 6844b161acfae4d4cb28e321250e0c58, type: 3}
+  colorSphere: {fileID: 3595033597551671592, guid: 6844b161acfae4d4cb28e321250e0c58, type: 3}
+  functionSphere: {fileID: 3595033597551671592, guid: 75176ca4f998a4641a6e911ad11eaec3, type: 3}
+  sphereTextures:
+  - {fileID: 2800000, guid: 394bca2d30be33b4799472b17761b1b3, type: 3}
+  - {fileID: 2800000, guid: ec8fc801bbc3b204e804dd73f453e177, type: 3}
+  - {fileID: 2800000, guid: d1664bc31a6cea34bbdcadd6d6f3f600, type: 3}
 --- !u!4 &1572336194
 Transform:
   m_ObjectHideFlags: 0
@@ -1457,8 +1466,8 @@ SceneRoots:
   - {fileID: 1526949120}
   - {fileID: 404384655}
   - {fileID: 1263085654}
+  - {fileID: 2440400148802322188}
+  - {fileID: 19285193}
   - {fileID: 1539531764}
   - {fileID: 875428471}
   - {fileID: 1572336194}
-  - {fileID: 2440400148802322188}
-  - {fileID: 19285193}

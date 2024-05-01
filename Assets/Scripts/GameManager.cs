@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] GameObject sphere;
+    [SerializeField] GameObject colorSphere;
     private List<Color> sphereColors = new List<Color>();
+    [SerializeField] GameObject functionSphere;
+    [SerializeField] private List<Texture2D> sphereTextures = new List<Texture2D>(); // haven't found another way to assign textures...
     private float spawnDelay = 1.0f;
     private Vector3 spawnPos1 = new Vector3(-4.3f, 5f, 4.0f);
     private Vector3 spawnPos2 = new Vector3(4.3f, 5f, 4.0f);
+    private Color functionSphereColor = new Color(1, 1, 1);
 
     private void Awake()
     {
@@ -29,6 +33,10 @@ public class GameManager : MonoBehaviour
     {
         // spawn spheres till all the colors are used up
         StartCoroutine("SpawnColorSphere");
+
+        // spawn spheres till all the textures are used up
+        StartCoroutine("SpawnFunctionSphere");
+
     }
 
     IEnumerator SpawnColorSphere() 
@@ -40,12 +48,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator SpawnFunctionSphere()
+    {
+        while (sphereTextures.Count > 0)
+        {
+            yield return new WaitForSeconds(spawnDelay);
+            SpawnSphere(sphereTextures[0], spawnPos2);
+            sphereTextures.RemoveAt(0);
+        }
+    }
+
     private void SpawnSphere(Color c, Vector3 p) 
     {
         // spawn the new spwhere in an inactive state to prevent Awake from runngin
-        sphere.SetActive(false);
-        var mySphere = Instantiate(sphere, p, sphere.transform.rotation);
-        sphere.SetActive(true);
+        colorSphere.SetActive(false);
+        var mySphere = Instantiate(colorSphere, p, colorSphere.transform.rotation);
+        colorSphere.SetActive(true);
 
         // assign the color of the sphere
         mySphere.GetComponent<ColorSphere>().sphereColor = sphereColors[0];
@@ -55,20 +73,19 @@ public class GameManager : MonoBehaviour
     }
 
     // OVERLOAD for material 
-    private void SpawnSphere(Material m, Vector3 p)
+    private void SpawnSphere(Texture2D t, Vector3 p)
     {
         // spawn the new spwhere in an inactive state to prevent Awake from runngin
-        sphere.SetActive(false);
-        var mySphere = Instantiate(sphere);
-        sphere.SetActive(true);
+        functionSphere.SetActive(false);
+        var mySphere = Instantiate(functionSphere, p, functionSphere.transform.rotation);
+        functionSphere.SetActive(true);
 
-        // change the starting conditions for the sphere
+        // assign texture
+        mySphere.GetComponent<FunctionSphere>().sphereColor = functionSphereColor;
+        mySphere.GetComponent<FunctionSphere>().sphereTexture = t;
 
-    }
+        // activate sphere to trigger Awake
+        mySphere.SetActive(true);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
