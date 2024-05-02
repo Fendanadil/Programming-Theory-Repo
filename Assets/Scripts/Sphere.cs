@@ -34,6 +34,7 @@ public abstract class Sphere : MonoBehaviour
     private bool isRetractingLine = false;
     private Vector3 spawnPosition;
     private bool hasColor = false;
+    private float sphereBounciness;
     private Color m_sphereColor;
     public Color sphereColor
     {
@@ -256,7 +257,11 @@ public abstract class Sphere : MonoBehaviour
 
         // stop gravity
         sphereRB.useGravity = false;
-        
+
+        // remove bounciness
+        sphereBounciness = sphereC.material.bounciness;
+        sphereC.material.bounciness = 0;
+
         // set starting conditions for the line drawing
         sphereLine.SetActive(true);
         isPullingLine = true;
@@ -283,8 +288,12 @@ public abstract class Sphere : MonoBehaviour
         isPullingLine = false;
         isRetractingLine = true;
 
+        // restore bouncyness
+        sphereC.material.bounciness = sphereBounciness;
+
         // restore gravity
         sphereRB.useGravity = true;
+
     }
 
     // function of the sphere
