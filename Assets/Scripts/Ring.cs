@@ -54,7 +54,7 @@ public class Ring : MonoBehaviour
     {
         if (isAnimatingLine)
         {
-            // ENCAPSULATION
+            // ABSTRACTION
             AnimateLine();
         }
     }
