@@ -27,12 +27,48 @@ public class FunctionSphere : Sphere
     }
     public override void SetAdditionalProperties()
     {
+        compatibleRing = "FunctionRing";
         sphereMR.material.mainTexture = m_sphereTexture;
         sphereMR.material.mainTextureScale = new Vector3(1.5f, 1.0f);
     }
 
-    public override void ApplySphereFunction()
+    public Color ReturnColorResult(Color c1, Color c2)
     {
+        switch (m_sphereTexture.name)
+        {
+            case "plus":
+                float newRed = c1.r + c2.r;
+                float newGreen = c1.g + c2.g;
+                float newBLue = c1.b + c2.b;
+
+                return new Color(SanitizeColorValue(c1.r + c2.r), SanitizeColorValue(c1.g + c2.g), SanitizeColorValue(c1.b + c2.b) , 1);
+            case "minus":
+                return new Color(SanitizeColorValue(c1.r - c2.r), SanitizeColorValue(c1.g - c2.g), SanitizeColorValue(c1.b - c2.b), 1);
+            case "multiply":
+                return new Color(c1.r * c2.r, c1.g * c2.g, c1.b * c2.b, 1);
+            case "avg":
+                return new Color((c1.r + c2.r) / 2, (c1.g + c2.g) / 2, (c1.b + c2.b) / 2, 1);
+            default:
+                Debug.LogError("unknown function sphere!");
+                return sphereColor;
+        }
+        
+    }
+
+    private float SanitizeColorValue(float c) 
+    {
+        if (c < 0)
+        {
+            return 0;
+        }
+        else if (c > 1)
+        {
+            return 1;
+        }
+        else 
+        {
+            return c;
+        }
 
     }
 

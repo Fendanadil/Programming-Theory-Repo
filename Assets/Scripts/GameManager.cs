@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         colorSphere.SetActive(true);
 
         // assign the color of the sphere
-        mySphere.GetComponent<ColorSphere>().sphereColor = sphereColors[0];
+        mySphere.GetComponent<Sphere>().sphereColor = sphereColors[0];
 
         // activate sphere to trigger Awake
         mySphere.SetActive(true);

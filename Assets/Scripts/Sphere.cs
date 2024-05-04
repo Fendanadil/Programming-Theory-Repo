@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public abstract class Sphere : MonoBehaviour
+public class Sphere : MonoBehaviour
 {
     protected MeshRenderer sphereMR;
     private Rigidbody sphereRB;
@@ -35,6 +35,7 @@ public abstract class Sphere : MonoBehaviour
     private Vector3 spawnPosition;
     private bool hasColor = false;
     private float sphereBounciness;
+    public string compatibleRing { get; protected set; }
     private Color m_sphereColor;
     public Color sphereColor
     {
@@ -95,8 +96,8 @@ public abstract class Sphere : MonoBehaviour
     }
 
     public virtual void SetAdditionalProperties() 
-    { 
-    
+    {
+        compatibleRing = "ColorRing";
     }
         
 
@@ -297,5 +298,9 @@ public abstract class Sphere : MonoBehaviour
     }
 
     // function of the sphere
-    public abstract void ApplySphereFunction();
+    public virtual Color ReturnColorResult() 
+    {
+        return sphereColor;
+    }
+    
 }
