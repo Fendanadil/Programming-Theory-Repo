@@ -35,6 +35,8 @@ public class Sphere : MonoBehaviour
     private Vector3 spawnPosition;
     private bool hasColor = false;
     private float sphereBounciness;
+
+    // ENCAPSULATION
     public string compatibleRing { get; protected set; }
     private Color m_sphereColor;
     public Color sphereColor
@@ -131,6 +133,22 @@ public class Sphere : MonoBehaviour
             DisolveSphere(true);
         }
 
+    }
+
+    private void FadeSphere()
+    {
+        Color thisColor = sphereMR.material.color;
+        float alphaValue = thisColor.a - (1 / fadeTime * Time.deltaTime);
+        thisColor = new Color(thisColor.r, thisColor.g, thisColor.b, alphaValue);
+        sphereMR.material.color = thisColor;
+        if (thisColor.a <= 0)
+        {
+            // stop the fading
+            isFadingOut = false;
+
+            // respawn the sphere at it's starting location
+            SpawnSphere(spawnPosition);
+        }
     }
 
     private void FadeOutSphere() 

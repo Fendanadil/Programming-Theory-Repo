@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class OutputRing : Ring
 {
 
@@ -14,7 +15,7 @@ public class OutputRing : Ring
         outputPS = outputParticles.GetComponent<ParticleSystem>();
     }
 
-
+    // POLYMORPHISM
     override public void UpdateRingStatus()
     {
         if (connectedColors.Count == 1)

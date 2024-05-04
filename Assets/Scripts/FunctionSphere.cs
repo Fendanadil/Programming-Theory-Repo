@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class FunctionSphere : Sphere
 {
     private bool hasTexture = false;
@@ -25,6 +26,7 @@ public class FunctionSphere : Sphere
             }
         }
     }
+    // POLYMORPHISM
     public override void SetAdditionalProperties()
     {
         compatibleRing = "FunctionRing";
@@ -32,6 +34,7 @@ public class FunctionSphere : Sphere
         sphereMR.material.mainTextureScale = new Vector3(1.5f, 1.0f);
     }
 
+    // POLYMORPHISM
     public Color ReturnColorResult(Color c1, Color c2)
     {
         switch (m_sphereTexture.name)

@@ -37,11 +37,6 @@ public class Ring : MonoBehaviour
         ringLR.SetPosition(1, startPoint);
     }
 
-    private void Start()
-    {
-
-    }
-
     public void FixedUpdate()
     {
         foreach (Collider collider in Physics.OverlapSphere(gameObject.transform.position, pullRadius)) 
@@ -59,6 +54,7 @@ public class Ring : MonoBehaviour
     {
         if (isAnimatingLine)
         {
+            // ENCAPSULATION
             AnimateLine();
         }
     }
